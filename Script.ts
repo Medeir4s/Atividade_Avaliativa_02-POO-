@@ -32,16 +32,8 @@ class ItemInventario{
 }
 
 class Arma extends Item {
-    aplicarBeneficios(persornagem: Personagem) {
-
-    }
-
-    RemoverBeneficios(persornagem: Personagem) {
-    }
 }
-
 class Pocao extends Item{
-
 }
 
 class Inventario{
@@ -55,23 +47,15 @@ class Inventario{
     }
 }
 
-class itemMenu{
-    private opcao:string;
+class ItemMenu{
+   private opcao:string;
     private textoOpcao:string;
+}
+
+class Menu{
+    private itemMenu: ItemMenu[];
 
     imprimirMenu(){
-        constructor();{
-            let arma = new ItemMenu("1", "Equipar arma");
-            let addArmaInv = new ItemMenu("2", "Tomar poção");
-            let addPocaoInv = new ItemMenu("3", "");
-            let imprimiriInfo = new ItemMenu("4", "Restaurar MP");
-            let desequiparArma = new ItemMenu("5", "Defender");
-    
-            this.itensMenu.push(ataque);
-            this.itensMenu.push(ataqueEspecial);
-            this.itensMenu.push(curaHp);
-            this.itensMenu.push(MP);
-            this.itensMenu.push(desefa);
-        }
+        return this.imprimirMenu
     }
 }
