@@ -1,100 +1,51 @@
-class InventarioLimiteException extends error{
-    nome = InventarioLimiteException
-}
+import { Arma } from "./Arma";
+import { Inventario } from "./Inventario";
+import { ItemInventario } from "./ItemInventario";
+import { Personagem } from "./Personagem";
+import { Pocao } from "./Pocao";
 
+export class Jogo{
+    private menu:Menu;
+    private personagem:Personagem;
 
-class Personagem{
-   private nome: string;
-   private hp:number;
-   private mp:number;
-   private forca:number;
-   private defesa:number;
-   private inventario:Inventario;
-   private arma:string;
-
-   abrirInventario(){
-    for(let i:number=0; i<this.inventario.getitemInventario.length;i++){
-        console.log(i + "-" + this.inventario.getitemInventario[i].item.nome +this.inventario.getitemInventario[i].getquantidadeMaximaItens
-        + "Total: " + this.inventario.getitemInventario.length + "/" + this.inventario.getitemInventario
-        )
-   }
-}
-
-abstract class  Item{
-    protected nome:string;
-    protected descricao: string;
-
-    constructor(n:string, d:string, ){
-        this.nome = n;
-        this.descricao = d;
+    constructor (m, p, i){
+        this.menu = m;
+        this.personagem = p;
+    };
+     
+    jogar() {
+        do {
+            let opcao = this.menu.imprimirMenu();
+            
+            if(opcao == "3"){
+                var enter = require('prompt-sync')();
+                let nomeItem = enter("Nome do Item: ");
+                let descricaoItem = enter("Discrição do Item:: ")
+                let quantidadeItem = enter("Digite a quantidade: ");
+                let novaArma = new Arma(nomeItem, descricaoItem);
+                let itemInv = new ItemInventario(novaArma, quantidadeItem);
+                this.personagem.getinventario().getItensInventario().push(itemInv)
+            } else if (opcao == "4"){
+                var enter = require('prompt-sync')();
+                let nomeItem = enter("Nome do Item: ");
+                let descricaoItem = enter("Discrição do Item: ")
+                let quantidadeItem = enter("Digite a quantidade: ");
+                let novaPocao = new Pocao(nomeItem, descricaoItem);
+                let itemInv = new ItemInventario(novaPocao, quantidadeItem);
+                this.personagem.getinventario().getItensInventario().push(itemInv)
+            } else if (opcao == "1"){
+                for(let i:number = 0; i < this.personagem.getinventario().getItensInventario().length; i++){
+                    console.log(this.personagem.getinventario().getItensInventario()[i])
+                }
+            }
+             else if (opcao == "5"){
+                this.personagem.informacoesPersonagem()
+            } else if (opcao == "0"){
+                console.log("Programa finalizado!!")
+            } else if (opcao == "6"){
+                this.personagem.desaquiparArma();
+            } 
+      
+            } while();   
     }
-    abstract aplicarBeneficios(persornagem: Personagem);
-
-    abstract RemoverBeneficios(persornagem: Personagem);
-}
-
-class ItemInventario{
-    private quantidade:number;
-    private item:Item;
-}
-
-class Arma extends Item {
-    aplicarBeneficios(persornagem: Personagem) {
-
-    }
-
-    RemoverBeneficios(persornagem: Personagem) {
-    }
-}
-
-class Pocao extends Item{
-
-}
-
-class Inventario{
-    private itemInventario: ItemInventario[];
-    private quantidadeMaximaItens: number;
-
-    adicionarItem(it:ItemInventario){
-     if(this.itemInventario.length >= this.quantidadeMaximaItens){
-        throw new InventarioLimiteException('O inventario esta cheio');
-     }
-     if (this.itemInventario.includes(it)){
-        this.quantidadeMaximaItens++
-     } else {
-        this.itemInventario.push(it)
-     }
-    }
-
-    getitemInventario(){
-        return  this.itemInventario
-    }
-}
-
-class ItemMenu{
-    private opcao: string;
-    private opcaoTexto:string;
-}
-
-class Menu{
-    private itensMenu: ItemMenu[];
-
-    constructor(){
-        let arma = new ItemMenu("1", "Equipar arma");
-        let addArmaInv = new ItemMenu("2", "Tomar poção");
-        let addPocaoInv = new ItemMenu("3", "");
-        let imprimiriInfo = new ItemMenu("4", "Restaurar MP");
-        let desequiparArma = new ItemMenu("5", "Defender");
-
-        this.itensMenu.push(arma);
-        this.itensMenu.push(addArmaInv);
-        this.itensMenu.push(addPocaoInv);
-        this.itensMenu.push(imprimiriInfo);
-        this.itensMenu.push(desequiparArma);
-    }
-
-    imprimirMenu(){  
-    }
-
-
 }
